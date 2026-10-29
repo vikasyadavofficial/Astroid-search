@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Asteroid Explorer</title>
+  <meta name="description" content="Look up any known asteroid by name or number and see its orbit and properties, using official NASA/JPL data.">
+  <meta name="theme-color" content="#d9d9d9">
+  <meta name="referrer" content="no-referrer">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply a saved theme choice before the page paints (avoids a light/dark flash).
+    try {
+      var t = localStorage.getItem("asteroid-explorer-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#search-input">Skip to search</a>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Asteroid Explorer home">
+      <svg class="brand-mark" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <ellipse cx="20" cy="20" rx="17" ry="8" transform="rotate(-25 20 20)" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="20" cy="20" r="3.4" fill="currentColor"/>
+        <circle cx="33" cy="12.5" r="2.4" fill="currentColor"/>
+      </svg>
+      <span>Asteroid Explorer</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="./" aria-current="page">Asteroid search</a>
+      <a href="#about">About the data</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Look up any known asteroid</h1>
+      <p class="lead">Type a name, a number or a designation. You'll see where the asteroid goes around the Sun, how big it is, and how well scientists know its path. All data comes from NASA's Jet Propulsion Laboratory.</p>
+
+      <form id="search-form" class="search" role="search" autocomplete="off" novalidate>
+        <label for="search-input">Asteroid name, number or designation</label>
+        <div class="search-row">
+          <input id="search-input" name="q" type="search" inputmode="search" maxlength="60"
+                 placeholder="e.g. Eros, 433, or 2003 CP20" autocapitalize="none" spellcheck="false" required>
+          <button type="submit" class="btn primary">Search</button>
+        </div>
+        <p class="hint">Not sure what to try? Pick one:</p>
+        <div class="chips" id="examples">
+          <button type="button" class="chip" data-q="Eros">Eros</button>
+          <button type="button" class="chip" data-q="Ceres">Ceres</button>
+          <button type="button" class="chip" data-q="Vesta">Vesta</button>
+          <button type="button" class="chip" data-q="Bennu">Bennu</button>
+          <button type="button" class="chip" data-q="Apophis">Apophis</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="status" class="status-area" role="status" aria-live="polite"></div>
+    <div id="result" class="result" hidden></div>
+
+    <section id="about" class="panel about">
+      <h2>About this data</h2>
+      <ul class="plain">
+        <li><strong>Source:</strong> NASA/JPL Small-Body Database, the standard catalogue of known asteroids and comets.</li>
+        <li><strong>Orbits are predictions.</strong> They are fitted to telescope observations and come with an uncertainty, shown as “±”. More observations over a longer time means a better-known orbit.</li>
+        <li><strong>Values are rounded</strong> to about three significant digits to keep things readable.</li>
+        <li><strong>Missing values are not guessed.</strong> If a property has not been measured or estimated, the page says “Not available”.</li>
+        <li><strong>“Potentially hazardous” is a label for orbit geometry and size.</strong> It does not mean an asteroid is expected to hit Earth.</li>
+      </ul>
+      <p class="small">Asteroid Explorer is an independent project and is not affiliated with or endorsed by NASA or JPL.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Data: <a href="https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html" rel="noopener noreferrer" target="_blank">NASA/JPL Small-Body Database</a></span>
+    <button type="button" id="theme-toggle" class="btn ghost" aria-label="Switch between light and dark theme">◐ Theme</button>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
